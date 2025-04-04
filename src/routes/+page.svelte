@@ -9,20 +9,25 @@
 	} from '@luhmllo/lilycat';
 	import { onMount } from 'svelte';
 
+	let basecolor = $state('');
 	let notification: HTMLDialogElement | null = null;
-	let hex: string = '';
+	let hex: string = $state('');
 	let timeOut: number | undefined;
 
 	// Inject styles once
-	if (
-		typeof window !== 'undefined' &&
-		!document.querySelector('style[data-lilycat]')
-	) {
-		const style = document.createElement('style');
-		style.setAttribute('data-lilycat', 'true');
-		style.textContent = `${tokens}${reset}${normalize}${customs}${icons}${props}`;
-		document.head.appendChild(style);
-	}
+	$effect.pre(() => {
+		if (
+			typeof window !== 'undefined' &&
+			!document.querySelector('style[data-lilycat]')
+		) {
+			const style = document.createElement('style');
+			style.setAttribute('data-lilycat', 'true');
+			style.textContent = `${tokens}${reset}${normalize}${customs}${icons}${props}`;
+			document.head.appendChild(style);
+		}
+
+		document?.documentElement?.style.setProperty('--base', basecolor);
+	});
 
 	onMount(() => {
 		notification = document.querySelector<HTMLDialogElement>('#notification');
@@ -101,16 +106,30 @@
 </script>
 
 <x-stack id="app">
-	{#each [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as shade}
-		<button
-			type="button"
-			class="w-full"
-			style="background-color: var(--{shade});"
-			on:click={copyToClipboard}
-		>
-			<span>{shade}</span>
+	<x-group>
+		{#each [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as shade}
+			<button
+				type="button"
+				class="w-full"
+				style="background-color: var(--{shade});"
+				onclick={copyToClipboard}
+			>
+				<span>{shade}</span>
+			</button>
+		{/each}
+	</x-group>
+
+	<x-flex id="toolbar">
+		<button type="button">
+			pick color <input
+				type="color"
+				name="basecolor"
+				id="basecolor"
+				bind:value={basecolor}
+			/>
 		</button>
-	{/each}
+		<!-- <button type="button"> export <i class="icon">download</i> </button> -->
+	</x-flex>
 </x-stack>
 
 <x-surlayer>
@@ -121,11 +140,11 @@
 </x-surlayer>
 
 <style lang="css">
-	@property --base {
+	/* @property --base {
 		syntax: '<color>';
 		inherits: false;
 		initial-value: hsl(24, 64%, 69%);
-	}
+	} */
 
 	:root {
 		--50: hsl(from var(--base) h s calc(l + 11));
@@ -141,15 +160,34 @@
 		--950: hsl(from var(--base) h s calc(l - 11));
 	}
 
-	#app {
-		height: 100dvh;
-		button {
-			border-radius: 0;
-			flex-grow: 1;
-			user-select: none;
+	:global(body) {
+		background-color: var(--50);
+	}
 
-			span {
-				mix-blend-mode: difference;
+	#app {
+		gap: var(--md, 15px);
+		height: 100dvh;
+		padding: var(--md, 15px) var(--md, 15px) var(--md, 15px);
+
+		& > x-group {
+			backdrop-filter: blur(var(--xs, 5px));
+			border-radius: var(--md, 15px);
+			box-shadow: 0 var(--md, 15px) var(--md, 15px) calc(var(--md, 15px) * -1)
+				hsl(from var(--950) h s l / 50%);
+			flex-grow: 1;
+			outline: solid 2px hsla(from var(--500) h s l / 50%);
+			outline-offset: -2px;
+			overflow: clip;
+
+			button {
+				border-radius: 0;
+				flex-grow: 1;
+				padding: 0 var(--xl, 35px);
+				user-select: none;
+
+				span {
+					mix-blend-mode: difference;
+				}
 			}
 		}
 	}
@@ -164,9 +202,9 @@
 		display: flex;
 		gap: var(--lg, 25px);
 		inset: 0 0 auto auto;
-		margin: var(--md, 15px);
-		max-height: calc(100% - var(--md, 15px));
-		max-width: calc(100% - var(--md, 15px));
+		margin: var(--xs, 5px);
+		max-height: calc(100% - var(--xs, 5px));
+		max-width: calc(100% - var(--xs, 5px));
 		min-height: 0;
 		min-width: 0;
 		opacity: 0;
@@ -201,6 +239,29 @@
 			font-size: var(--xl);
 			font-style: normal;
 			text-transform: uppercase;
+		}
+	}
+
+	#toolbar {
+		gap: var(--md, 15px);
+		height: max-content;
+		inset: auto 0 0 0;
+		padding: var(--xs, 5px);
+		place-content: center;
+
+		button {
+			flex-grow: 1;
+			overflow: clip;
+			place-content: space-between;
+			position: relative;
+
+			input {
+				border-radius: inherit;
+				height: 100%;
+				inset: 0;
+				position: absolute;
+				width: 100%;
+			}
 		}
 	}
 </style>

@@ -1,1 +1,5 @@
 @import 'tailwindcss/utilities';
+
+html {
+  font-family: "Josefin Sans", sans-serif;
+}
