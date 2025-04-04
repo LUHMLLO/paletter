@@ -114,8 +114,8 @@
 </x-stack>
 
 <x-surlayer>
-	<dialog id="notification">
-		<h6>copied to clipboard</h6>
+	<dialog id="notification" open>
+		<i style={`background-color: ${hex};`}></i>
 		<var>{hex}</var>
 	</dialog>
 </x-surlayer>
@@ -145,32 +145,42 @@
 		button {
 			border-radius: 0;
 			flex-grow: 1;
-      user-select: none;
+			user-select: none;
 		}
 	}
 
 	#notification {
-		background-color: hsla(from var(--50) h s l / 50%);
+		align-items: center;
+		background-color: hsla(from var(--500) h s l / 15%);
 		backdrop-filter: blur(var(--xs, 5px));
+		box-shadow: 0 var(--md, 15px) var(--md, 15px) calc(var(--md, 15px) * -1)
+			hsl(from var(--950) h s l / 50%);
+		border-radius: var(--xs);
 		color: var(--950);
+		display: flex;
+		gap: var(--lg, 25px);
 		inset: 0 0 auto auto;
-		margin: var(--md);
-		max-height: calc(100% - var(--md));
-		max-width: calc(100% - var(--md));
+		margin: var(--md, 15px);
+		max-height: calc(100% - var(--md, 15px));
+		max-width: calc(100% - var(--md, 15px));
 		min-height: 0;
 		min-width: 0;
-		padding: var(--xl);
+		padding: var(--md, 15px) var(--lg, 25px) var(--md, 15px) var(--md, 15px);
 		position: fixed;
 
-		h6 {
-			margin-bottom: var(--xs);
-      user-select: none;
+		i {
+			aspect-ratio: 1/1;
+			border-radius: var(--xs);
+			display: inline-block;
+			flex-shrink: 0;
+			height: calc(var(--xl) * 2);
+			outline: inherit;
+			outline-offset: inherit;
 		}
 
 		var {
 			font-size: var(--xl);
 			font-style: normal;
-			font-weight: 600;
 			text-transform: uppercase;
 		}
 	}
