@@ -96,7 +96,7 @@
 		timeOut = setTimeout(() => {
 			notification?.close();
 			hex = '';
-		}, 5000);
+		}, 3500);
 	}
 </script>
 
@@ -114,7 +114,7 @@
 </x-stack>
 
 <x-surlayer>
-	<dialog id="notification" open>
+	<dialog id="notification">
 		<i style={`background-color: ${hex};`}></i>
 		<var>{hex}</var>
 	</dialog>
@@ -126,18 +126,19 @@
 		inherits: false;
 		initial-value: hsl(50, 50%, 50%);
 	}
+
 	:root {
-		--50: hsl(from var(--base) h s calc(l + 25));
-		--100: hsl(from var(--base) h s calc(l + 20));
-		--200: hsl(from var(--base) h s calc(l + 15));
-		--300: hsl(from var(--base) h s calc(l + 10));
-		--400: hsl(from var(--base) h s calc(l + 5));
+		--50: hsl(from var(--base) h s calc(l + 11));
+		--100: hsl(from var(--base) h s calc(l + 9));
+		--200: hsl(from var(--base) h s calc(l + 7));
+		--300: hsl(from var(--base) h s calc(l + 5));
+		--400: hsl(from var(--base) h s calc(l + 3));
 		--500: var(--base);
-		--600: hsl(from var(--base) h s calc(l - 5));
-		--700: hsl(from var(--base) h s calc(l - 10));
-		--800: hsl(from var(--base) h s calc(l - 15));
-		--900: hsl(from var(--base) h s calc(l - 20));
-		--950: hsl(from var(--base) h s calc(l - 25));
+		--600: hsl(from var(--base) h s calc(l - 3));
+		--700: hsl(from var(--base) h s calc(l - 5));
+		--800: hsl(from var(--base) h s calc(l - 7));
+		--900: hsl(from var(--base) h s calc(l - 9));
+		--950: hsl(from var(--base) h s calc(l - 11));
 	}
 
 	#app {
@@ -157,7 +158,7 @@
 			hsl(from var(--950) h s l / 50%);
 		border-radius: var(--xs);
 		color: var(--950);
-		display: flex;
+    display: flex;
 		gap: var(--lg, 25px);
 		inset: 0 0 auto auto;
 		margin: var(--md, 15px);
@@ -165,8 +166,22 @@
 		max-width: calc(100% - var(--md, 15px));
 		min-height: 0;
 		min-width: 0;
+    opacity: 0;
 		padding: var(--md, 15px) var(--lg, 25px) var(--md, 15px) var(--md, 15px);
+    pointer-events: none;
 		position: fixed;
+		transition-property: opacity;
+		transition-duration: var(--animDuration);
+		transition-timing-function: var(--animTiming);
+		transition-behavior: allow-discrete;
+
+		@starting-style {
+			opacity: 0;
+		}
+
+		&[open] {
+			opacity: 1;
+		}
 
 		i {
 			aspect-ratio: 1/1;
