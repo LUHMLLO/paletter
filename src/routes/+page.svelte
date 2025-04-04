@@ -108,7 +108,7 @@
 			style="background-color: var(--{shade});"
 			on:click={copyToClipboard}
 		>
-			{shade}
+			<span>{shade}</span>
 		</button>
 	{/each}
 </x-stack>
@@ -124,7 +124,7 @@
 	@property --base {
 		syntax: '<color>';
 		inherits: false;
-		initial-value: hsl(50, 50%, 50%);
+		initial-value: hsl(24, 64%, 69%);
 	}
 
 	:root {
@@ -147,18 +147,21 @@
 			border-radius: 0;
 			flex-grow: 1;
 			user-select: none;
+
+			span {
+				mix-blend-mode: difference;
+			}
 		}
 	}
 
 	#notification {
 		align-items: center;
-		background-color: hsla(from var(--500) h s l / 15%);
+		background-color: hsla(from var(--50) h s l / 50%);
 		backdrop-filter: blur(var(--xs, 5px));
 		box-shadow: 0 var(--md, 15px) var(--md, 15px) calc(var(--md, 15px) * -1)
 			hsl(from var(--950) h s l / 50%);
-		border-radius: var(--xs);
 		color: var(--950);
-    display: flex;
+		display: flex;
 		gap: var(--lg, 25px);
 		inset: 0 0 auto auto;
 		margin: var(--md, 15px);
@@ -166,9 +169,10 @@
 		max-width: calc(100% - var(--md, 15px));
 		min-height: 0;
 		min-width: 0;
-    opacity: 0;
+		opacity: 0;
+		outline-color: hsla(from var(--500) h s l / 50%);
 		padding: var(--md, 15px) var(--lg, 25px) var(--md, 15px) var(--md, 15px);
-    pointer-events: none;
+		pointer-events: none;
 		position: fixed;
 		transition-property: opacity;
 		transition-duration: var(--animDuration);

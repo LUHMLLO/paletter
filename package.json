@@ -23,6 +23,6 @@
 		"vite": "^6.2.5"
 	},
 	"dependencies": {
-		"@luhmllo/lilycat": "npm:@jsr/luhmllo__lilycat@^0.1.21"
+		"@luhmllo/lilycat": "npm:@jsr/luhmllo__lilycat@^0.1.23"
 	}
 }
