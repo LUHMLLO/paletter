@@ -2,7 +2,11 @@
 	import { paletteSelectedColor } from '$lib/stores';
 	import { colorToHex } from '$lib/utils';
 
+	let timeOut: number | undefined;
+
 	function copyToClipboard(e: MouseEvent): void {
+		if ($paletteSelectedColor) clearTimeout(timeOut);
+
 		const target = e.currentTarget;
 
 		if (!(target instanceof HTMLElement)) return;
@@ -14,6 +18,10 @@
 		$paletteSelectedColor
 			? navigator.clipboard.writeText($paletteSelectedColor)
 			: console.warn('selected color is undefined, cannot copy to clipboard.');
+
+		timeOut = setTimeout(() => {
+			paletteSelectedColor.set(undefined);
+		}, 3500);
 	}
 </script>
 
@@ -31,24 +39,24 @@
 
 <style lang="css">
 	x-row {
-		--base: #cea56c;
+		--base: #d7b587;
+		--step: 2.125;
 
-		--0: hsl(from var(--base) h s calc(l + 11));
-		--1: hsl(from var(--base) h s calc(l + 9));
-		--2: hsl(from var(--base) h s calc(l + 7));
-		--3: hsl(from var(--base) h s calc(l + 5));
-		--4: hsl(from var(--base) h s calc(l + 3));
+		--0: hsl(from var(--base) h s calc(l + calc(var(--step) * 5)));
+		--1: hsl(from var(--base) h s calc(l + calc(var(--step) * 4)));
+		--2: hsl(from var(--base) h s calc(l + calc(var(--step) * 3)));
+		--3: hsl(from var(--base) h s calc(l + calc(var(--step) * 2)));
+		--4: hsl(from var(--base) h s calc(l + var(--step)));
 		--5: var(--base);
-		--6: hsl(from var(--base) h s calc(l - 3));
-		--7: hsl(from var(--base) h s calc(l - 5));
-		--8: hsl(from var(--base) h s calc(l - 7));
-		--9: hsl(from var(--base) h s calc(l - 9));
-		--10: hsl(from var(--base) h s calc(l - 11));
+		--6: hsl(from var(--base) h s calc(l - var(--step)));
+		--7: hsl(from var(--base) h s calc(l - calc(var(--step) * 2)));
+		--8: hsl(from var(--base) h s calc(l - calc(var(--step) * 3)));
+		--9: hsl(from var(--base) h s calc(l - calc(var(--step) * 4)));
+		--10: hsl(from var(--base) h s calc(l - calc(var(--step) * 5)));
 	}
 
 	.palette {
-		border-radius: var(--xs, 5px);
-		height: 150px;
+		height: 300px;
 		overflow: clip;
 		width: 100%;
 

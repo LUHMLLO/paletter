@@ -1,18 +1,17 @@
 <script lang="ts">
 	import ColorPalette from '$lib/components/colorPalette.svelte';
-	import ToastNotification from '$lib/components/toastNotification.svelte';
+	import Toast from '$lib/components/toast.svelte';
+	import { paletteSelectedColor } from '$lib/stores';
 </script>
 
 <aside></aside>
 <x-stack>
 	<ColorPalette />
-	<ColorPalette />
-	<ColorPalette />
-	<ColorPalette />
-	<ColorPalette />
 </x-stack>
 
-<ToastNotification />
+{#if $paletteSelectedColor}
+	<Toast />
+{/if}
 
 <style>
 	:global(body) {

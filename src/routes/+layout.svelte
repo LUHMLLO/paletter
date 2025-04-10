@@ -6,7 +6,7 @@
 
 <svelte:head>
 	<script type="module">
-		import { all } from 'https://esm.sh/jsr/@luhmllo/lilycat@0.1.25';
+		import { all } from 'https://esm.sh/jsr/@luhmllo/lilycat@0.1.26';
 
 		const sheet = new CSSStyleSheet();
 		sheet.replaceSync(all);
