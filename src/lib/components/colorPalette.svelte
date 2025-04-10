@@ -24,11 +24,18 @@
 		}, 3500);
 	}
 
-	const { base = '#808080', steps = 2.5 } = $props();
+	const { base = '#808080', steps = 3 } = $props();
 </script>
 
 <x-row class="palette" style={`--base: ${base}; --steps: ${steps};`}>
-	<x-stack> </x-stack>
+	<x-stack>
+		<h6>controls</h6>
+    <input type="range" name="" id="">
+		<p>
+			Lanam delectus molestias assu menda modi dolrum magni laborum incidunt qua
+			erat eum.
+		</p>
+	</x-stack>
 	{#each { length: 10 } as _, i}
 		<button
 			class="swatch"
@@ -61,13 +68,14 @@
 		width: 100%;
 
 		& > x-stack {
-			flex: 1 1 100%;
+			padding: var(--md, 15px);
+			width: 200px;
 		}
 
 		.swatch {
 			align-items: start;
 			border-radius: 0;
-			flex: 1 1 100%;
+			flex: 1 1;
 			height: auto;
 			padding: var(--md, 15px);
 		}

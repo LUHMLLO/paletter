@@ -40,6 +40,7 @@
 			display: inline-block;
 			flex-shrink: 0;
 			height: 75px;
+			outline: solid 1px hsla(from var(--clr-text) h s l / 15%);
 		}
 
 		& > x-group {
