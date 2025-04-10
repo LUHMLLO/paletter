@@ -29,7 +29,7 @@
 		outline: solid 2px hsla(from var(--clr-text) h s l / 15%);
 		outline-offset: -2px;
 		padding: var(--sm, 10px) var(--md, 15px) var(--sm, 10px) var(--sm, 10px);
-		position: absolute;
+		position: fixed;
 		transition-property: opacity;
 		transition-duration: var(--animDuration);
 		transition-timing-function: var(--animTiming);

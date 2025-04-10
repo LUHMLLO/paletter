@@ -4,19 +4,13 @@
 	import { paletteSelectedColor } from '$lib/stores';
 </script>
 
-<aside></aside>
-<x-stack>
-	<ColorPalette />
-</x-stack>
+<ColorPalette base="#0088DC" />
+<ColorPalette base="#008080" />
+<ColorPalette base="#9ACD32" />
+<ColorPalette base="#FFD300" />
+<ColorPalette base="#FF6600" />
+<ColorPalette base="#ED2939" />
 
 {#if $paletteSelectedColor}
 	<Toast />
 {/if}
-
-<style>
-	:global(body) {
-		display: grid;
-		grid-template-columns: 200px 1fr;
-		grid-template-rows: 1fr;
-	}
-</style>

@@ -23,14 +23,17 @@
 			paletteSelectedColor.set(undefined);
 		}, 3500);
 	}
+
+	const { base = '#808080', steps = 2.5 } = $props();
 </script>
 
-<x-row class="palette">
+<x-row class="palette" style={`--base: ${base}; --steps: ${steps};`}>
+	<x-stack> </x-stack>
 	{#each { length: 10 } as _, i}
 		<button
 			class="swatch"
 			style={`background-color: var(--${i})`}
-			on:click={copyToClipboard}
+			onclick={copyToClipboard}
 		>
 			<span>{i}</span>
 		</button>
@@ -39,26 +42,27 @@
 
 <style lang="css">
 	x-row {
-		--base: #d7b587;
-		--step: 2.125;
-
-		--0: hsl(from var(--base) h s calc(l + calc(var(--step) * 5)));
-		--1: hsl(from var(--base) h s calc(l + calc(var(--step) * 4)));
-		--2: hsl(from var(--base) h s calc(l + calc(var(--step) * 3)));
-		--3: hsl(from var(--base) h s calc(l + calc(var(--step) * 2)));
-		--4: hsl(from var(--base) h s calc(l + var(--step)));
+		--0: hsl(from var(--base) h s calc(l + calc(var(--steps) * 5)));
+		--1: hsl(from var(--base) h s calc(l + calc(var(--steps) * 4)));
+		--2: hsl(from var(--base) h s calc(l + calc(var(--steps) * 3)));
+		--3: hsl(from var(--base) h s calc(l + calc(var(--steps) * 2)));
+		--4: hsl(from var(--base) h s calc(l + var(--steps)));
 		--5: var(--base);
-		--6: hsl(from var(--base) h s calc(l - var(--step)));
-		--7: hsl(from var(--base) h s calc(l - calc(var(--step) * 2)));
-		--8: hsl(from var(--base) h s calc(l - calc(var(--step) * 3)));
-		--9: hsl(from var(--base) h s calc(l - calc(var(--step) * 4)));
-		--10: hsl(from var(--base) h s calc(l - calc(var(--step) * 5)));
+		--6: hsl(from var(--base) h s calc(l - var(--steps)));
+		--7: hsl(from var(--base) h s calc(l - calc(var(--steps) * 2)));
+		--8: hsl(from var(--base) h s calc(l - calc(var(--steps) * 3)));
+		--9: hsl(from var(--base) h s calc(l - calc(var(--steps) * 4)));
+		--10: hsl(from var(--base) h s calc(l - calc(var(--steps) * 5)));
 	}
 
 	.palette {
 		height: 300px;
 		overflow: clip;
 		width: 100%;
+
+		& > x-stack {
+			flex: 1 1 100%;
+		}
 
 		.swatch {
 			align-items: start;
